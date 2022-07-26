@@ -1,9 +1,64 @@
-*{
-    padding:0;
-    margin:0;
-    box-sizing: border-box ;
-}
-body {
-height:100vh;
 
+ * {
+    /* height & width now includes border & padding */
+    box-sizing: border-box;
+  }
+  
+body {
+  display: grid;
+  height: 100vh;
+  text-align: center;
+  font-family: Verdana;
+  /* grid-template-columns: 1fr 4fr;
+  grid-template-rows: 50px 1fr 30px;
+  grid-gap: 5px; */
+  }
+
+img {
+  display: block;
+  margin: 0 auto;
+  max-width:100%;
+  height:auto;
+
+}
+.game {
+  margin: 0 auto;
+    
+}
+
+
+.grid {
+  display:flex;
+  flex-wrap:wrap;
+  height:440px;
+  width:440px;
+}
+
+.grid >img {
+  /* display:grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr; */
+  margin:5px;
+  height:100px;
+  width:100px;
+  border: 5px solid rgb(230, 228, 178);
+  border-radius: 5px;
+  border-style: ;
+  filter: opacity(85%); 
+  filter: drop-shadow(5px 5px 5px rgb(160, 160, 160));
+
+} 
+
+
+button {
+  margin:30px 20px;
+  padding:10px;
+  background-color: black;
+  color: white;
+  border-radius: 15%;
+  font-size: 20px;
+}
+button:hover {
+  background-color: white;
+  color: black;
 }
