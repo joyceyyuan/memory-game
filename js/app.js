@@ -69,52 +69,89 @@ const cards=[
 
 
 /*----- app's state (variables) -----*/
-//track the state of the game
 
-// let time;may add timer/time countdown later
-let move;
-let pair;
+let move=0;
+let pair=0;
 
-selectedCards=[];
-matchedCards=[];
+let openCards=[];
+let matchedCards=[];
 
+// const gridImages = document.createElement('img');
 
 /*----- cached element references -----*/
-const scoreEls ={
-    move:document.querySelector('#move'),
-    pair:document.querySelector('#pair')
+const moveEl=document.getElementById('move');
+const pairEl=document.getElementById('pair');
+
+console.log(moveEl.textContent=`Moves:  ${move}`);
+console.log(pairEl.textContent=`Pairs found:    ${pair}`);
+
+
+// const gridEl = document.querySelector('.grid');
+// const cardbackEl=document.querySelectorAll('.cardback');
+// const replayBtn=document.querySelector('button');
+// const imageEl = document.querySelector('img');
+
+
+/*----- event listeners -----*/
+
+// //handle a player clicking on a card
+// imageEl.addEventListener('click',flipCard); 
+// //handle a player clicking the replay button
+// replayBtn.addEventListener('click',initialize);
+
+// /*----- functions -----*/
+//Shuffle card array
+function shuffleCards(){
+    cards.sort(() => Math.random() - 0.5);
+};
+shuffleCards();
+console.log(cards);
+
+//count the moves
+function moveCount(){
+    move += 1;
+    console.log(moveEl.textContent=`Moves:  ${move}`);
 }
-
-const gridEl = document.querySelector('.grid');
-
-const replayBtn=document.querySelector('button')
-
-
-//create grid board with images
-function createGrid(){
-    cards.forEach(function(card){
-        const imageEl=document.createElement('img');
-        imageEl.setAttribute('src','img/OfficeLogo.png');
-        imageEl.setAttribute('id',cards.indexOf(card));
-        // console.log(cardImage);
-        gridEl.appendChild(imageEl);
-    });
-}
-createGrid();
-
-
-
 
 //Upon loading the app should:Initialize the state variables
-initiate();
-function initiate(){
-    score={
-        move:0,
-        pair:0
-    }
+
+
+function initialize(){
+//create grid board with each card displaying back image
+cards.forEach(function(card){
+    const imageEl=document.createElement('img');
+    imageEl.classList.add('cardback');
+    imageEl.setAttribute('src','img/OfficeLogo.png');
+    imageEl.setAttribute('alt','cardback-OfficeLogo');
+    imageEl.setAttribute('id',cards.indexOf(card));
+    gridEl.appendChild(imageEl);
+    });
+ 
     getRandomCards();
     render();
-}
+};
+initialize();
+
+//define callback function using function expression
+//to display picture;show index of the card clicked,cache the clicked variable 
+// add the card clicked to openCards array;
+// initialize();
+
+function flipCard(e){
+    console.log(e.target, 'e.target->error'); //check which card was clicked 
+    let cardId=e.target.getAttribute('id'); 
+    console.log(`You clicked card ${cardId}`); 
+    cards.forEach(function(card){
+
+        console.log(imageEl);
+        imageEl.classList.add('cardfront');
+        imageEl.setAttribute('src','cards[cardId].image');
+        imageEl.setAttribute('alt','cards[cardId].name');
+        gridEl.appendChild(imageEl);
+    })
+    render();
+}; 
+
 
 //Render state variables to the page
 
@@ -122,61 +159,27 @@ function render(){
 
 }
 
-/*----- event listeners -----*/
-//handle a player clicking a square
-// document.querySelectorAll('.card')
+function checkOpenCards(){
+    if(openCards.length===2) {
+        checkIfMatch(openCards[0],openCards[1]);
+    }
+};
 
-
-
-
-//handle a player clicking the replay button
-
-replayBtn.addEventListener('click',initiate);
-initiate();
-
-
-
-
-
-
-// function flipcard {
-// display picture;
-// add the card to selectedCards;
-// add 3d effect
-// increment move counter;
-// };
-
-// function hideCard {
-// hide picture;
-// remove the card to showed cards;
-// }
-
-// /*----- functions -----*/
-
-
-//Shuffle card array
-function getRandomCards(){
-	// create random objects in cards array
-	const randIndex = Math.floor(Math.random() * cards.length);
-	return cards[randIndex];
+function checkIfMatch(){
+    if(openCards[0]===openCards[1]){
+        alert('You found another pair');
+        pair+=1;
+        openCards=[];
+        //remain card front up
+    }else{
+        alert('wrong');
+        //show card back
+    }
 };
 
 
-// function checkTwoSelected {
-// if  (selectedCards.length=2) {
-//    card.addeventListeners('click',hideCards);
-//    grid.appendChild();
-// }
-// }
-
-// compare two selected cards{
-// match:
-// not match:
-// }
-
 // gameOver{
 // compare time move with timelimit movelimit;
-// check if all cards face up/matched,display gameover}
+// check if all cards face up/matched,display gameover};pairs===8
 
-
-// accuracy 
+initialize();
