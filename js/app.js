@@ -73,28 +73,26 @@ let move=0;
 let pair=0;
 
 let openCards=[];
-let cardsArray=[];
-let matchedCards=[];
+let openCardsId=[];
+let pairedCards=[];
 
 /*----- cached element references -----*/
 const moveEl=document.getElementById('move');
 const pairEl=document.getElementById('pair');
+const messageEl=document.getElementById('result');
 
-console.log(moveEl.textContent=`Moves:  ${move}`);
-console.log(pairEl.textContent=`Pairs found:    ${pair}`);
+console.log(moveEl.textContent=`Move:  ${move}`);
+console.log(pairEl.textContent=`Pair found:    ${pair}`);
 
 
 const gridEl = document.querySelector('.grid');
-const cardbackEl=document.querySelectorAll('.card-back');
-const frontCardEl=document.querySelector('.card-front');
-const replayBtn=document.querySelector('button');
-const grid = document.querySelector('.card-back')
+const cardbackEl = document.querySelector('.card-back');
 
+const replayBtn=document.querySelector('button');    
+const grid = document.querySelector('.card-back');
+const cardImage=document.querySelectorAll('img');
 /*----- event listeners -----*/
 
-
-//handle a player clicking the replay button
-// replayBtn.addEventListener('click',initialize);
 
 /*----- functions -----*/
 
@@ -106,99 +104,97 @@ function shuffleCards(){
 shuffleCards();
 console.log(cards);
 
-
+//create card board
 function createGrid(){
     for (let i=0; i<cards.length; i++){
-// console.log(cards.name,'>-card name');
-const cardbackImage = document.createElement('img');
-  cardbackImage.setAttribute('src', 'img/OfficeLogo.png') ;
-    cardbackImage.setAttribute('id', i) ;
-    cardbackImage.addEventListener('click', flipCard)  ;
-    grid.appendChild(cardbackImage);
- }  
+        // console.log(cards.name,'>-card name');
+        const card = document.createElement('img');
+        card.setAttribute('src', 'img/OfficeLogo.png');
+        card.setAttribute('id', i) ;
+        console.log(card);
+        card.addEventListener('click', flipCard);
+        grid.appendChild(card);
+    }  
 }
 
 
+//Upon loading the app should:Initialize the state variables
 
-
-        // frontImage.classList.add('#front-Image');
-        // // frontImage.setAttribute('src', "cards");
-        // frontImage.setAttribute('alt', 'cards.name');
-        // frontCardEl.appendChild(frontImage);
-
-    
-    const frontImageEl=document.querySelector('#front-Image');
-    console.log(frontImageEl);
-
-
-// }
-// createCards();
-
-// //Upon loading the app should:Initialize the state variables
-
-// function initialize(){
-//     createGrid()
-//     shuffleCards();
-//     render();
-// };
-// initialize();
+function initialize(){
+    move=0;
+    pair=0;
+    openCards=[];
+    openCardsId=[];
+    pairedCards=[];
+    createGrid()
+    shuffleCards();
+    render();
+};
+initialize();
 
 
 //count the moves
 function moveCount(){
     move += 1;
-    console.log(moveEl.textContent=`Moves:  ${move}`);
+    console.log(moveEl.textContent=`Move:  ${move}`);
 }
-
-//define callback function using function expression
-//to display picture;show index of the card clicked,cache the clicked variable 
-// add the card clicked to openCards array;
-// initialize();
-
-//handle a player clicking on a card
-// gridEl.addEventListener('click',flipCard); 
 
 function flipCard(e){
     console.log(e.target); //check which card was clicked 
     let cardId=e.target.getAttribute('id'); 
     console.log(`You clicked card ${cardId}`); 
-    // moveCount();
     openCards.push(cards[cardId].name);
-    cardsArray.push(cardId);
+    openCardsId.push(cardId);
     e.target.setAttribute('src',cards[cardId].image);
-
-}
-
-
-
-// //Render state variables to the page
-
-// function render(){
-
-// }
-
-// function checkOpenCards(){
-//     if(openCards.length===2) {
-//         checkIfMatch(openCards[0],openCards[1]);
-//     }
-// };
-
-// function checkIfMatch(){
-//     if(openCards[0]===openCards[1]){
-//         alert('You found another pair');
-//         pair+=1;
-//         openCards=[];
-//         //remain card front up
-//     }else{
-//         alert('wrong');
-//         //show card back
-//     }
-// };
+    moveCount();
+    checkIfPair();
+};
 
 
-// // gameOver{
-// // compare time move with timelimit movelimit;
-// // check if all cards face up/matched,display gameover};pairs===8
 
-// initialize();
-createGrid();
+//Render state variables to the page
+
+function render(){
+
+};
+
+//check if cards chosen are a pair
+function checkIfPair(){
+    if(openCards.length === 2) {
+        if(openCards[0]===openCards[1]){
+            alert('You found a pair');
+            pair+=1;
+            pairedCards.push(openCards);
+        //remain card open displaying front
+        } else {
+        //flip over card showing card back
+            cardImage(openCards[0]).setAttribute('src','image/OfficeLogo.png');
+            cardImage(openCards[1]).setAttribute('src','image/OfficeLogo.png');
+            alert('Wrong.Please try again');
+        }
+        //set to null  
+        openCards=[];
+        openCardsId=[];
+        pairCount();
+    }
+};
+
+//count the pairs
+function pairCount(){
+    pair += 1;
+    console.log(pairEl.textContent=`Pair found:    ${pair}`);
+
+};
+
+
+//Define when game is over, check if all cards got paired
+//maybe set a time limit later
+function gameWon(){
+    if (pairCount === cards.length / 2){
+        messageEl.textContent='Congratulations!'
+    }
+};
+
+//handle player clicking on the replay button
+replayBtn.addEventListener('click', initialize)
+initialize();
