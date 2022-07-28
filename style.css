@@ -25,6 +25,7 @@ img {
 .scoreboard {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: 20px 1fr;
   justify-self: start;
   color: rgb(189, 61, 61);
   /* font-weight: bold; */
@@ -33,6 +34,10 @@ img {
   justify-items: start;
 }
 
+#result{
+  margin:20px 20px auto;
+  color: rgba(51, 72, 235, 0.836);
+}
 .grid{
   display:flex;
   flex-wrap:wrap;
