@@ -18,7 +18,7 @@ img {
   height:auto;
 }
 
-.game-container {
+.game {
   margin: 0 auto;  
 }
 
@@ -33,15 +33,16 @@ img {
   justify-items: start;
 }
 
-.card-grid{
+.grid{
   display:flex;
   flex-wrap:wrap;
   height:440px;
   width:440px;
 }
-.card{
-  transform:rotateY(180deg);
-  /* position:relative; */
+.grid.flip{
+  transform-style:preserve-3d;
+  transition: transform 1s;
+  position:relative;
 }
 
 .card-front{
@@ -63,7 +64,7 @@ img {
   height:440px;
   width:440px;
   position:absolute; 
-  backface-visibility: hidden;
+
 }
 
 .card-back > img {
