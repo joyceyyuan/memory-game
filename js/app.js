@@ -43,11 +43,11 @@ const cards=[
     }, 
     {   
         name:'Pam',
-        image:'img/Ryan.png'
+        image:'img/Pam.png'
     },   
     {   
         name:'Pam',
-        image:'img/Ryan.png'
+        image:'img/Pam.png'
     },    
     {   
         name:'Ryan',
@@ -77,46 +77,48 @@ let openCardsId=[];
 let pairedCards=[];
 
 /*----- cached element references -----*/
-const moveEl=document.getElementById('move');
-const pairEl=document.getElementById('pair');
-const messageEl=document.getElementById('result');
+const moveEl = document.getElementById('move');
+const pairEl = document.getElementById('pair');
+
 
 console.log(moveEl.textContent=`Move:  ${move}`);
 console.log(pairEl.textContent=`Pair found:    ${pair}`);
 
 
-const gridEl = document.querySelector('.grid');
-const cardbackEl = document.querySelector('.card-back');
 
-const replayBtn=document.querySelector('button');    
-const grid = document.querySelector('.card-back');
-const cardImage=document.querySelectorAll('img');
+const cardbackEl = document.querySelector('.card-back');
+const replayBtn = document.querySelector('button');    
+const cardImage = document.querySelectorAll('img');
+const openEl=document.querySelector('cardId');
+console.log(openEl)
+
+
 /*----- event listeners -----*/
 
 
 /*----- functions -----*/
 
 
-//Shuffle card array
+//Shuffle cards array
 function shuffleCards(){
     cards.sort(() => Math.random() - 0.5);
 };
-shuffleCards();
-console.log(cards);
+
+console.log(cards)
 
 //create card board
 function createGrid(){
     for (let i=0; i<cards.length; i++){
-        // console.log(cards.name,'>-card name');
         const card = document.createElement('img');
         card.setAttribute('src', 'img/OfficeLogo.png');
         card.setAttribute('id', i) ;
         console.log(card);
         card.addEventListener('click', flipCard);
-        grid.appendChild(card);
+        cardbackEl.appendChild(card);
     }  
 }
-
+createGrid();
+console.log(cardbackEl) //all card images are within grid wih class=card back
 
 //Upon loading the app should:Initialize the state variables
 
@@ -126,62 +128,86 @@ function initialize(){
     openCards=[];
     openCardsId=[];
     pairedCards=[];
-    createGrid()
     shuffleCards();
-    render();
 };
 initialize();
 
 
-//count the moves
+//count the moves,render it to the page
 function moveCount(){
     move += 1;
     console.log(moveEl.textContent=`Move:  ${move}`);
 }
 
 function flipCard(e){
-    console.log(e.target); //check which card was clicked 
+    console.log(e.target); //check which card was clicked <img src='',id=''>
     let cardId=e.target.getAttribute('id'); 
     console.log(`You clicked card ${cardId}`); 
     openCards.push(cards[cardId].name);
     openCardsId.push(cardId);
+    console.log(openCards,openCardsId)
+
     e.target.setAttribute('src',cards[cardId].image);
+    e.target.setAttribute('name',cards[cardId].name);
+
     moveCount();
-    checkIfPair();
+    checkOpenCards();
 };
 
 
 
 //Render state variables to the page
 
-function render(){
+// job is to update the view with the values of our state variables!
+// We call this funciton at the end of all our controller functions,
+// AKA the functions that are the callbacks to any event listener we defined 
 
-};
 
-//check if cards chosen are a pair
-function checkIfPair(){
+// function render(){
+
+// };
+
+
+//check if card open.If so, disable event listener: stop counting moves,etc.
+function checkOpenCards(){
     if(openCards.length === 2) {
-        if(openCards[0]===openCards[1]){
-            alert('You found a pair');
-            pair+=1;
-            pairedCards.push(openCards);
-        //remain card open displaying front
-        } else {
-        //flip over card showing card back
-            cardImage(openCards[0]).setAttribute('src','image/OfficeLogo.png');
-            cardImage(openCards[1]).setAttribute('src','image/OfficeLogo.png');
-            alert('Wrong.Please try again');
-        }
+        checkIfPair();
+    } else if (openCards.length === 1){
+        console.log('please pick another card');
+        // e.target.removeEventListener('click',flipCard);// 
+
+    } else {
         //set to null  
         openCards=[];
         openCardsId=[];
-        pairCount();
     }
 };
+checkOpenCards();
 
-//count the pairs
+//check if cards open/clicked are a pair
+function checkIfPair(){
+    //If it's a pair, remain card open displaying front
+    if(openCards[0] === openCards[1]){
+        console.log('You found a pair');
+        pairCount();
+        pairedCards.push(openCards);    
+    } else {
+        //flip card over to show card back
+        let cardOne=openCards[0];
+        let cardTwo=openCards[1];
+
+        // let findId=cards.indexOf('cardOne');
+        // console.log(findId);
+
+        // cardOne.setAttribute('src','image/OfficeLogo.png');
+        // cardTwo.setAttribute('src','image/OfficeLogo.png');
+        console.log('Wrong.Please try again');
+    }
+}
+
+//count the pairs,render it to the page
 function pairCount(){
-    pair += 1;
+    pair +=1;
     console.log(pairEl.textContent=`Pair found:    ${pair}`);
 
 };
@@ -189,12 +215,13 @@ function pairCount(){
 
 //Define when game is over, check if all cards got paired
 //maybe set a time limit later
+//Or add a BGM audio, gamme over if player don't find all pairs when music finishes
+
 function gameWon(){
     if (pairCount === cards.length / 2){
-        messageEl.textContent='Congratulations!'
+        console.log(pairEl.textContent='Congratulations!You found all pairs');
     }
 };
 
 //handle player clicking on the replay button
 replayBtn.addEventListener('click', initialize)
-initialize();
