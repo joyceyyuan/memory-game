@@ -183,21 +183,25 @@ function checkOpenCards(){
 function checkIfPair(){
     //If it's a pair, remain card open displaying front
     if(openCards[0] === openCards[1]){
-        message.innerText ='You found a pair';
+        console.log('You found a pair');
         pairedCards.push(openCards); 
-    } else {
-        openCards=[];
-    openCardsId=[];
+    }   
     // }   e.target.addEventListener('click',flipCard)
-    // openCards.setAttribute('src', 'img/OfficeLogo.png');
-    }
+    openCards=[];
+    openCardsId=[];
+
+    const openEl=document.querySelector('.flipped');
+    openEl.classList.remove('flipped');
+
+// e.target.setAttribute('src','img/OfficeLogo.png');
+}
 
 
     // const openEl=document.querySelector('.flipped');
     // openEl.classList.remove('flipped');
 
 // e.target.setAttribute('src','img/OfficeLogo.png');
-}
+
 
 //render the pairs counter to the page
 
