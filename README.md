@@ -3,11 +3,11 @@
 The game starts with all the cards face down.Start the game by flipping a card. Then try to find another card that has the same image as the first. If the following one flipped does not match the first one, it will be flipped over again with card back. If two flipped cards matches, they remain showing card front until game over or user clicked replay. Players win when they find all pairs.
 
 # Game View
-<img src="https://imgur.com/gallery/YWwkVOX">
-<img src='https://imgur.com/gallery/TDxenc9>
+<img src="img/GameView1.png">
+<img src="img/GameView2.png">
 
 # Wireframe
-<img src='https://imgur.com/gallery/XjjB809">
+<img src="img/Wireframe.png">
 
 # Game Logic:
 
@@ -30,13 +30,14 @@ Otherwise two cards flipped will filp over again back to card back.
 
 # Next Steps
 - Fix replay button 
+- Fix some weird bugs on functions
 - Add theme picture
 - Set timer
 - Add theme audio
 
 
 # Future Features
-<img src="https://imgur.com/gallery/wtmxuR1">
+<img src="img/FutureFeatures.png">
 
 # Credit
 - Image: https://www.instagram.com/planoly/ , https://flyclipart.com/
