@@ -87,14 +87,16 @@ console.log(pairEl.textContent=`Pair found:    ${pair}`);
 
 
 const cardbackEl = document.querySelector('.card-back');
-const replayBtn = document.querySelector('button');    
+// const replayBtn = document.getElementById('reset-btn');   
+const replayBtn = document.querySelector('button');   
 const cardImage = document.querySelectorAll('img');
 const card = document.createElement('img');
-console.log(card)
+const message = document.getElementById('message');
+
 // const openEl=document.querySelector('cardId');
 // console.log(openEl)
 /*----- EL -----*/
-replayBtn.addEventListener('click', reset());
+replayBtn.addEventListener('click', reset);
 
 /*----- functions -----*/
 
@@ -138,20 +140,20 @@ console.log(cardbackEl) //all card images are within grid wih class=card back
 //count the moves,render it to the page
 function moveCount(){
     move += 1;
-    console.log(moveEl.textContent=`Move:  ${move}`);
+    moveEl.textContent=`Move:  ${move}`
 }
 
 function flipCard(e){
-    console.log(e.target); //check which card was clicked <img src='',id=''>
+    // console.log(e.target); //check which card was clicked <img src='',id=''>
     let cardId=e.target.getAttribute('id'); 
     let flippedCard=e.target.classList.add('flipped');
     // console.log(flippedCard);
 
-    console.log(`You clicked card ${cardId}`); 
+    // console.log(`You clicked card ${cardId}`); 
     checkOpenCards(e);
     openCards.push(cards[cardId].name);
     openCardsId.push(cardId);
-    console.log(openCards,openCardsId)
+    // console.log(openCards,openCardsId)
 
     e.target.setAttribute('src',cards[cardId].image);
     e.target.setAttribute('name',cards[cardId].name);
@@ -163,11 +165,11 @@ function flipCard(e){
 
 
 //check if card open.If so, disable event listener: stop counting moves,etc.
-function checkOpenCards(e){
+function checkOpenCards(){
     if(openCards.length === 2) {
-        checkIfPair(e);
+        checkIfPair();
     } else if (openCards.length === 1){
-        console.log('please pick another card');
+        message.innerText='please pick another card';
         // e.target.removeEventListener('click',flipCard);
     } else {
         //set to null  
@@ -181,15 +183,18 @@ function checkOpenCards(e){
 function checkIfPair(){
     //If it's a pair, remain card open displaying front
     if(openCards[0] === openCards[1]){
-        console.log('You found a pair');
+        message.innerText ='You found a pair';
         pairedCards.push(openCards); 
-    }   
-    // }   e.target.addEventListener('click',flipCard)
-    openCards=[];
+    } else {
+        openCards=[];
     openCardsId=[];
+    // }   e.target.addEventListener('click',flipCard)
+    // openCards.setAttribute('src', 'img/OfficeLogo.png');
+    }
 
-    const openEl=document.querySelector('.flipped');
-    openEl.classList.remove('flipped');
+
+    // const openEl=document.querySelector('.flipped');
+    // openEl.classList.remove('flipped');
 
 // e.target.setAttribute('src','img/OfficeLogo.png');
 }
@@ -213,14 +218,16 @@ function gameWon(){
 
 //reset the card grid after clicking on the replay button
 function reset(){
-    let remove = document.querySelector("img")
-      for (let i=0; i<cards.length; i++){
-          remove.removeAttribute('img');
-          card.removeAttribute('src', 'img/OfficeLogo.png');
-          card.removeAttribute('id', i) ;
-      }
-      shuffleCards();
-  }
+    shuffleCards()
+        for (let i=0; i<cards.length; i++){
+            const card = document.querySelector('img');
+            card.setAttribute('src', 'img/OfficeLogo.png');
+            card.setAttribute('id', i) ;
+            // console.log(card);
+            card.addEventListener('click', flipCard);
+            cardbackEl.appendChild(card);
+        }  
+    }
 // function reset(){
 //     for (let i=0; i<cards.length; i++){
     
@@ -229,7 +236,8 @@ function reset(){
 //         // document.getElementById().innerHTML = "";
 //     }
 //     shuffleCards();
-createGrid();
+// createGrid();
+// }
 // }
 
-// // createGrid();
+createGrid();
