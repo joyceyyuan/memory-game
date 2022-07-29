@@ -72,7 +72,6 @@ let move=0;
 let pair=0;
 let openCards=[];
 let openCardsId=[];
-let pairedCards=[];
 
 /*----- cached element references -----*/
 
@@ -118,13 +117,12 @@ function moveCount(){
 function flipCard(e){
     let cardId=e.target.getAttribute('id'); 
     let flippedCard=e.target.classList.add('flipped');
-    // checkOpenCards(e);
+    checkOpenCards(e);
     openCards.push(cards[cardId].name);
     openCardsId.push(cardId);
     e.target.setAttribute('src',cards[cardId].image);
     e.target.setAttribute('name',cards[cardId].name);
     moveCount();
-    checkOpenCards(e);
 };
 
 
@@ -134,11 +132,11 @@ function checkOpenCards(e){
         checkIfPair();
     } else if (openCards.length === 1){
         message.innerText='Please pick another card';
-        // e.target.removeEventListener('click',flipCard);
+        e.target.removeEventListener('click',flipCard);
     } else {
         //set to null  
-        openCards=[];
-        openCardsId=[];
+        openCards = [];
+        openCardsId = [];
     }
 };
 
@@ -150,14 +148,12 @@ function checkIfPair() {
     const secondCard = openCardsId[1];
 
     if(firstCard === secondCard) {
-    pairedCards.push(openCards); 
-    pair+=1
-    message.innerText='You found a pair';
+    message.innerText = 'You found a pair';
     pairCount();
     } else {
     cards[firstCard].setAttribute('src', 'img/OfficeLogo.png');
     cards[secondCard].setAttribute('src', 'img/OfficeLogo.png');
-    message.innerText='Sorry, please try again'
+    message.innerText ='Sorry, please try again'
     }
     openCards=[];
     openCardsId=[];
@@ -166,6 +162,7 @@ function checkIfPair() {
 
 //Count Pairs,render it to the page
 function pairCount(){
+    pair += 1;
     pairEl.innerText=`Pair found:    ${pair}`
 }
 
@@ -180,7 +177,7 @@ function gameWon(){
 //reset the card grid after clicking on the replay button
 function reset(){
     shuffleCards();
-    for (let i=0; i<cards.length; i++){
+    for (let i = 0; i < cards.length; i++){
         const card = document.querySelector('img');
         card.setAttribute('src', 'img/OfficeLogo.png');
         card.setAttribute('id', i) ;
@@ -194,7 +191,6 @@ function initialize(){
     pair=0;
     openCards=[];
     openCardsId=[];
-    pairedCards=[];
 }
 
 
