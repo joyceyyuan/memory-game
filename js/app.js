@@ -140,7 +140,7 @@ console.log(cardbackEl) //all card images are within grid wih class=card back
 //count the moves,render it to the page
 function moveCount(){
     move += 1;
-    moveEl.textContent=`Move:  ${move}`
+    moveEl.innerText=`Move:  ${move}`
 }
 
 function flipCard(e){
@@ -165,7 +165,7 @@ function flipCard(e){
 
 
 //check if card open.If so, disable event listener: stop counting moves,etc.
-function checkOpenCards(){
+function checkOpenCards(e){
     if(openCards.length === 2) {
         checkIfPair();
     } else if (openCards.length === 1){
@@ -180,21 +180,44 @@ function checkOpenCards(){
 
 
 //check if cards open/clicked are a pair
-function checkIfPair(){
-    //If it's a pair, remain card open displaying front
-    if(openCards[0] === openCards[1]){
-        console.log('You found a pair');
-        pairedCards.push(openCards); 
-    }   
-    // }   e.target.addEventListener('click',flipCard)
+function checkIfPair() {
+    const cards = document.querySelectorAll('img')
+    const firstCard = openCardsId[0]
+    const secondCard = openCardsId[1]
+    
+    if(firstCard === secondCard) {
+       pairedCards.push(openCards); 
+       message.innerText='You found a pair';
+    } else {
+      cards[firstCard].setAttribute('src', 'img/OfficeLogo.png')
+      cards[secondCard].setAttribute('src', 'img/OfficeLogo.png')
+      message.innerText='please pick another card'
+    }
     openCards=[];
     openCardsId=[];
+  
+    }
 
-    const openEl=document.querySelector('.flipped');
-    openEl.classList.remove('flipped');
+
+
+
+
+
+// function checkIfPair(){
+    //If it's a pair, remain card open displaying front
+    // if(openCards[0] === openCards[1]){
+    //     console.log('You found a pair');
+    //     pairedCards.push(openCards); 
+    // }   
+    // // }   e.target.addEventListener('click',flipCard)
+    // openCards=[];
+    // openCardsId=[];
+
+    // const openEl=document.querySelector('.flipped');
+    // openEl.classList.remove('flipped');
 
 // e.target.setAttribute('src','img/OfficeLogo.png');
-}
+
 
 
     // const openEl=document.querySelector('.flipped');
@@ -205,7 +228,7 @@ function checkIfPair(){
 
 //render the pairs counter to the page
 
-console.log(pairEl.textContent=`Pair found:    ${pairedCards.length / 2}`)
+pairEl.innerText=`Pair found:    ${pairedCards.length/2}`
 
 
 
@@ -232,16 +255,14 @@ function reset(){
             cardbackEl.appendChild(card);
         }  
     }
-// function reset(){
-//     for (let i=0; i<cards.length; i++){
+    function initialize(){
+            move=0;
+    pair=0;
+    openCards=[];
+    openCardsId=[];
+   pairedCards=[];
+
+    }
     
-//         card.removeAttribute('src', 'img/OfficeLogo.png');
-//         card.removeAttribute('id', i) ;
-//         // document.getElementById().innerHTML = "";
-//     }
-//     shuffleCards();
-// createGrid();
-// }
-// }
 
 createGrid();
