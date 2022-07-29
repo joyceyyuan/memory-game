@@ -26,7 +26,7 @@ Otherwise two cards flipped will filp over again back to card back.
 - Javascript
 
 # Game Link
-
+[Memory Game for The Office fans](https://62e43f7eb23751005b17edbd--graceful-fudge-d9ca2e.netlify.app/)
 
 # Next Steps
 - Fix replay button 
@@ -41,4 +41,4 @@ Otherwise two cards flipped will filp over again back to card back.
 
 # Credit
 - Image: https://www.instagram.com/planoly/ , https://flyclipart.com/
-- Special thanks to Charles Co, James Haff, Alo Maldonado, Nathan Mausert,John McCants for techinal support and encouragement throughout the process of builing this game.
+- Special thanks to General instructors and TAs: Charles Co, James Haff, Alo Maldonado, Nathan Mausert, John McCants for techinal support and encouragement throughout the process of builing this game.
