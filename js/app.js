@@ -150,7 +150,7 @@ function flipCard(e){
     // console.log(flippedCard);
 
     // console.log(`You clicked card ${cardId}`); 
-    checkOpenCards(e);
+    // checkOpenCards(e);
     openCards.push(cards[cardId].name);
     openCardsId.push(cardId);
     // console.log(openCards,openCardsId)
@@ -170,7 +170,7 @@ function checkOpenCards(e){
         checkIfPair();
     } else if (openCards.length === 1){
         message.innerText='please pick another card';
-        // e.target.removeEventListener('click',flipCard);
+        e.target.removeEventListener('click',flipCard);
     } else {
         //set to null  
         openCards=[];
@@ -185,17 +185,17 @@ function checkIfPair() {
     const firstCard = openCardsId[0]
     const secondCard = openCardsId[1]
     
-    if(firstCard === secondCard) {
+    if(openCards[0] === openCards[1]) {
        pairedCards.push(openCards); 
        message.innerText='You found a pair';
+       e.target.removeEventListener('click',flipCard);
     } else {
       cards[firstCard].setAttribute('src', 'img/OfficeLogo.png')
       cards[secondCard].setAttribute('src', 'img/OfficeLogo.png')
-      message.innerText='please pick another card'
+      message.innerText='sorry,please try again'
     }
     openCards=[];
     openCardsId=[];
-  
     }
 
 
