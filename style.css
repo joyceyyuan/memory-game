@@ -11,24 +11,31 @@ body {
   font-family: sans-serif;
   }
 
-img {
-  display: block;
-  margin: 0 auto;
-  max-width:100%;
-  height:auto;
+h1{
+  margin-top: 50px;
+  margin-bottom: -50px;
+
 }
 
 .game {
   margin: 0 auto;  
 }
 
+#message{
+  font-weight:bold;
+  font-family:Monospace;
+  font-size:25px;
+  color:rgb(189, 61, 61);
+}
+
 .scoreboard {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 20px 1fr;
+  grid-template-rows: 40px 1fr;
   justify-self: start;
   color: rgb(189, 61, 61);
-  /* font-weight: bold; */
+  font-family:Monospace;
+  font-size:20px;
   align-content: center;
   align-items: center;
   justify-items: start;

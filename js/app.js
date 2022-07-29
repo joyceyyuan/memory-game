@@ -84,9 +84,6 @@ const cardImage = document.querySelectorAll('img');
 const card = document.createElement('img');
 const message = document.getElementById('message');
 
-/*----- Event Listener -----*/
-
-replayBtn.addEventListener('click', reset);
 
 /*----- functions -----*/
 
@@ -107,6 +104,7 @@ function createGrid(){
         cardbackEl.appendChild(card);
     }  
 }
+createGrid();
 
 //Count moves,render it to the page
 function moveCount(){
@@ -117,12 +115,16 @@ function moveCount(){
 function flipCard(e){
     let cardId=e.target.getAttribute('id'); 
     let flippedCard=e.target.classList.add('flipped');
-    checkOpenCards(e);
-    openCards.push(cards[cardId].name);
-    openCardsId.push(cardId);
     e.target.setAttribute('src',cards[cardId].image);
     e.target.setAttribute('name',cards[cardId].name);
-    moveCount();
+    setTimeout(function(){
+        openCards.push(cards[cardId].name);
+    
+        openCardsId.push(cardId);
+        moveCount();
+        checkOpenCards(e);
+    }, 700)
+
 };
 
 
@@ -132,11 +134,7 @@ function checkOpenCards(e){
         checkIfPair();
     } else if (openCards.length === 1){
         message.innerText='Please pick another card';
-        e.target.removeEventListener('click',flipCard);
     } else {
-        //set to null  
-        openCards = [];
-        openCardsId = [];
     }
 };
 
@@ -144,15 +142,17 @@ function checkOpenCards(e){
 //check if cards open/clicked are a pair
 function checkIfPair() {
     const cards = document.querySelectorAll('img');
-    const firstCard = openCardsId[0];
-    const secondCard = openCardsId[1];
+    const firstCard = document.getElementById(openCardsId[0])
+    const secondCard = document.getElementById(openCardsId[1])
+    console.log(firstCard,secondCard);
 
-    if(firstCard === secondCard) {
+    if(firstCard.src === secondCard.src) {
+
     message.innerText = 'You found a pair';
     pairCount();
     } else {
-    cards[firstCard].setAttribute('src', 'img/OfficeLogo.png');
-    cards[secondCard].setAttribute('src', 'img/OfficeLogo.png');
+    cards[openCardsId[0]].setAttribute('src', 'img/OfficeLogo.png');
+    cards[openCardsId[1]].setAttribute('src', 'img/OfficeLogo.png');
     message.innerText ='Sorry, please try again'
     }
     openCards=[];
@@ -169,22 +169,11 @@ function pairCount(){
 
 
 function gameWon(){
-    if (pair === cards.length / 2){
-        console.log(pairEl.textContent='Congratulations!You found all pairs');
+    if (pair == cards.length / 2){
+        message.innerText='Congratulations!You found all pairs';
     }
 };
 
-//reset the card grid after clicking on the replay button
-function reset(){
-    shuffleCards();
-    for (let i = 0; i < cards.length; i++){
-        const card = document.querySelector('img');
-        card.setAttribute('src', 'img/OfficeLogo.png');
-        card.setAttribute('id', i) ;
-        card.addEventListener('click', flipCard);
-        cardbackEl.appendChild(card);
-    }  
-}
 
 function initialize(){
     move=0;
@@ -193,5 +182,3 @@ function initialize(){
     openCardsId=[];
 }
 
-
-createGrid();
