@@ -41,4 +41,4 @@ Otherwise two cards flipped will filp over again back to card back.
 
 # Credit
 - Image: https://www.instagram.com/planoly/ , https://flyclipart.com/
-- Special thanks to General instructors and TAs: Charles Co, James Haff, Alo Maldonado, Nathan Mausert, John McCants for techinal support and encouragement throughout the process of builing this game.
+- Special thanks to General Assembly instructors and TAs: Charles Co, James Haff, Alo Maldonado, Nathan Mausert, John McCants for techinal support and encouragement throughout the process of builing this game.
