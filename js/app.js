@@ -102,6 +102,7 @@ function createGrid(){
         card.setAttribute('id', i);
         card.addEventListener('click', flipCard);
         cardbackEl.appendChild(card);
+        message.innerText='Please pick a card'
     }  
 }
 createGrid();
@@ -122,7 +123,7 @@ function flipCard(e){
         openCardsId.push(cardId);
         moveCount();
         checkOpenCards(e);
-    }, 700)
+    }, 500)
 };
 
 
@@ -146,6 +147,7 @@ function checkIfPair() {
     if(firstCard.src === secondCard.src) {
     message.innerText = 'You found a pair';
     pairCount();
+    gameWon();
     } else {
     cards[openCardsId[0]].setAttribute('src', 'img/OfficeLogo.png');
     cards[openCardsId[1]].setAttribute('src', 'img/OfficeLogo.png');
