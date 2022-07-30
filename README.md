@@ -26,7 +26,7 @@ Otherwise two cards flipped will filp over again back to card back.
 - Javascript
 
 # Game Link
-[Memory Game for The Office fans](https://62e43f7eb23751005b17edbd--graceful-fudge-d9ca2e.netlify.app/)
+[Memory Game for The Office fans](https://memorygame-theoffice.netlify.app/)
 
 # Next Steps
 - Fix replay button 
